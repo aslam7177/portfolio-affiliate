@@ -121,3 +121,4 @@ const Affiliate = () => {
 
 export default Affiliate;
 
+

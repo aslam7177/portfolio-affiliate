@@ -1,86 +1,85 @@
 import './About.css';
 
 const About = () => {
-  const skills = [
-    'React', 'JavaScript', 'Node.js', 'Python', 'HTML/CSS', 
-    'Git', 'MongoDB', 'Express', 'TypeScript', 'UI/UX'
-  ];
-
   return (
-    <div className="about">
-      <section className="about-hero">
-        <div className="container">
-          <h1>About Me</h1>
-          <p className="subtitle">Get to know me better</p>
-        </div>
-      </section>
-
-      <section className="about-content">
-        <div className="container">
-          <div className="about-grid">
-            <div className="about-text">
-              <h2>Hello! I'm a Developer</h2>
-              <p>
-                I'm passionate about creating digital experiences that are both beautiful 
-                and functional. With a strong foundation in web development, I specialize 
-                in building modern, responsive applications that solve real-world problems.
-              </p>
-              <p>
-                When I'm not coding, I love exploring new technologies, sharing knowledge 
-                with the community, and discovering amazing products that can help others 
-                in their journey.
-              </p>
-              <p>
-                This portfolio showcases my work and the products I personally use and 
-                recommend. Every product featured here has been carefully selected based 
-                on my own experience and genuine value.
-              </p>
+    <div className="about-knowledge-panel">
+      <div className="knowledge-container">
+        <div className="knowledge-layout">
+          {/* Left Column - Image Gallery */}
+          <div className="knowledge-left">
+            <div className="image-gallery">
+              <div className="gallery-image">
+                <span>Profile Photo</span>
+              </div>
+              <div className="gallery-image">
+                <span>Photo 2</span>
+              </div>
+              <div className="gallery-image">
+                <span>Photo 3</span>
+              </div>
             </div>
+          </div>
+
+          {/* Center Column - Main Content */}
+          <div className="knowledge-center">
+            <h1 className="knowledge-name">Mohammad Aslam</h1>
+            <p className="knowledge-subtitle">
+              Computer Science Engineering Undergraduate · Co-Founder of Botter
+            </p>
             
-            <div className="about-image">
-              <div className="image-placeholder">
-                <span>Your Photo</span>
-              </div>
+            <div className="knowledge-tabs">
+              <button className="tab-pill active">Overview</button>
+              <button className="tab-pill">Projects</button>
+              <button className="tab-pill">Posts</button>
             </div>
-          </div>
-        </div>
-      </section>
 
-      <section className="skills-section">
-        <div className="container">
-          <h2 className="section-title">Skills & Technologies</h2>
-          <div className="skills-grid">
-            {skills.map((skill, index) => (
-              <div key={index} className="skill-badge">
-                {skill}
-              </div>
-            ))}
+            <div className="knowledge-about">
+              <p>
+                I am Aslam, a Computer Science Engineering undergraduate. I love artificial intelligence, computer networks, and computers in general. I enjoy thinking deeply, innovating, and exploring ideas while trying to understand the purpose of life and work. Almost everything in technology feels interesting to me.
+              </p>
+              <p>
+                It's not about the money.
+              </p>
+              <p>
+                i sell soap and others thing take a look if you care
+              </p>
+            </div>
           </div>
-        </div>
-      </section>
 
-      <section className="values-section">
-        <div className="container">
-          <h2 className="section-title">My Values</h2>
-          <div className="values-grid">
-            <div className="value-card">
-              <h3>Quality First</h3>
-              <p>I believe in delivering high-quality work that exceeds expectations.</p>
+          {/* Right Column - Info Cards */}
+          <div className="knowledge-right">
+            <div className="info-card">
+              <div className="info-label">Born</div>
+              <div className="info-value">23 October 2004</div>
+              <div className="info-detail">Born at home</div>
             </div>
-            <div className="value-card">
-              <h3>Continuous Learning</h3>
-              <p>Technology evolves rapidly, and I'm committed to staying current.</p>
+
+            <div className="info-card">
+              <div className="info-label">Location</div>
+              <div className="info-value">Pulivendula, Andhra Pradesh, India</div>
             </div>
-            <div className="value-card">
-              <h3>Honest Recommendations</h3>
-              <p>I only recommend products I've personally used and found valuable.</p>
+
+            <div className="info-card">
+              <div className="info-label">Education</div>
+              <div className="info-value">GITAM University</div>
+            </div>
+
+            <div className="info-card club-card">
+              <div className="info-label">Club</div>
+              <div className="info-value">Botter</div>
+            </div>
+
+            <div className="info-card">
+              <div className="info-label">Net Worth</div>
+              <div className="info-value">Future goal — Multi-billionaire</div>
             </div>
           </div>
         </div>
-      </section>
+      </div>
     </div>
   );
 };
 
 export default About;
+
 

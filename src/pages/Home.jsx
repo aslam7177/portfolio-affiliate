@@ -1,71 +1,113 @@
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 import './Home.css';
 
 const Home = () => {
+  const navigate = useNavigate();
+  const [hoveredPlanet, setHoveredPlanet] = useState(null);
+
+  const planets = [
+    {
+      id: 1,
+      name: 'Portfolio',
+      path: '/portfolio',
+      color: '#6366f1',
+      glowColor: 'rgba(99, 102, 241, 0.6)',
+      position: { top: '20%', left: '15%' },
+      size: '120px',
+      delay: '0s',
+    },
+    {
+      id: 2,
+      name: 'About',
+      path: '/about',
+      color: '#8b5cf6',
+      glowColor: 'rgba(139, 92, 246, 0.6)',
+      position: { top: '35%', right: '20%' },
+      size: '100px',
+      delay: '1s',
+    },
+    {
+      id: 3,
+      name: 'Products',
+      path: '/affiliate',
+      color: '#ec4899',
+      glowColor: 'rgba(236, 72, 153, 0.6)',
+      position: { bottom: '30%', left: '25%' },
+      size: '110px',
+      delay: '2s',
+    },
+    {
+      id: 4,
+      name: 'Contact',
+      path: '/contact',
+      color: '#06b6d4',
+      glowColor: 'rgba(6, 182, 212, 0.6)',
+      position: { bottom: '20%', right: '15%' },
+      size: '95px',
+      delay: '3s',
+    },
+  ];
+
+  const handlePlanetClick = (path) => {
+    navigate(path);
+  };
+
   return (
-    <div className="home">
-      <section className="hero">
-        <div className="container">
-          <div className="hero-content">
-            <h1 className="hero-title">
-              Hi, I'm <span className="highlight">Your Name</span>
-            </h1>
-            <p className="hero-subtitle">
-              Full Stack Developer & Creative Problem Solver
-            </p>
-            <p className="hero-description">
-              I build beautiful, functional web applications and share amazing products 
-              that can help transform your digital experience.
-            </p>
-            <div className="hero-buttons">
-              <Link to="/portfolio" className="btn btn-primary">
-                View My Work
-              </Link>
-              <Link to="/contact" className="btn btn-secondary">
-                Get In Touch
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
+    <div className="space-home">
+      {/* Animated Stars Background */}
+      <div className="stars"></div>
+      <div className="stars2"></div>
+      <div className="stars3"></div>
 
-      <section className="features">
-        <div className="container">
-          <h2 className="section-title">What I Do</h2>
-          <div className="features-grid">
-            <div className="feature-card">
-              <div className="feature-icon">💻</div>
-              <h3>Web Development</h3>
-              <p>Building responsive and modern web applications using the latest technologies.</p>
-            </div>
-            <div className="feature-card">
-              <div className="feature-icon">🎨</div>
-              <h3>UI/UX Design</h3>
-              <p>Creating intuitive and beautiful user interfaces that provide great experiences.</p>
-            </div>
-            <div className="feature-card">
-              <div className="feature-icon">🚀</div>
-              <h3>Product Recommendations</h3>
-              <p>Curating and sharing the best tools and products that I use and trust.</p>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* Welcome Text */}
+      <div className="space-welcome">
+        <h1 className="space-title">Explore My Universe</h1>
+        <p className="space-subtitle">Navigate through the cosmos to discover my work</p>
+      </div>
 
-      <section className="cta-section">
-        <div className="container">
-          <div className="cta-content">
-            <h2>Check Out My Recommended Products</h2>
-            <p>Discover tools and products that I personally use and recommend</p>
-            <Link to="/affiliate" className="btn btn-primary btn-large">
-              Explore Products
-            </Link>
+      {/* Floating Planets */}
+      <div className="planets-container">
+        {planets.map((planet) => (
+          <div
+            key={planet.id}
+            className={`planet ${hoveredPlanet === planet.id ? 'hovered' : ''}`}
+            style={{
+              ...planet.position,
+              '--planet-size': planet.size,
+              '--planet-color': planet.color,
+              '--planet-glow': planet.glowColor,
+              '--animation-delay': planet.delay,
+            }}
+            onMouseEnter={() => setHoveredPlanet(planet.id)}
+            onMouseLeave={() => setHoveredPlanet(null)}
+            onClick={() => handlePlanetClick(planet.path)}
+            role="button"
+            tabIndex={0}
+            aria-label={`Navigate to ${planet.name}`}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                handlePlanetClick(planet.path);
+              }
+            }}
+          >
+            <div className="planet-core"></div>
+            <div className="planet-glow"></div>
+            <div className="planet-label">{planet.name}</div>
           </div>
-        </div>
-      </section>
+        ))}
+      </div>
+
+      {/* Scroll Indicator */}
+      <div className="scroll-indicator">
+        <div className="scroll-arrow"></div>
+        <span>Scroll to explore</span>
+      </div>
     </div>
   );
 };
 
 export default Home;
+
 
