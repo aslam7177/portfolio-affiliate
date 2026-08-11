@@ -1,0 +1,71 @@
+.cosmic-background {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background: #05050a;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.cosmic-smoke {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.35;
+  will-change: transform;
+}
+
+.cosmic-smoke-1 {
+  width: 55vw;
+  height: 55vw;
+  top: -15%;
+  left: -10%;
+  background: radial-gradient(circle, #1e1b4b 0%, #312e81 40%, transparent 70%);
+  animation: swirl-1 28s ease-in-out infinite alternate;
+}
+
+.cosmic-smoke-2 {
+  width: 50vw;
+  height: 50vw;
+  bottom: -20%;
+  right: -15%;
+  background: radial-gradient(circle, #4c1d95 0%, #831843 45%, transparent 70%);
+  animation: swirl-2 34s ease-in-out infinite alternate;
+}
+
+.cosmic-smoke-3 {
+  width: 45vw;
+  height: 45vw;
+  top: 35%;
+  left: 30%;
+  background: radial-gradient(circle, #134e4a 0%, #0e7490 35%, transparent 65%);
+  animation: swirl-3 40s ease-in-out infinite alternate;
+}
+
+.cosmic-stars {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+@keyframes swirl-1 {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(8vw, 12vh) scale(1.15) rotate(12deg); }
+}
+
+@keyframes swirl-2 {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(-10vw, -8vh) scale(1.1) rotate(-10deg); }
+}
+
+@keyframes swirl-3 {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(6vw, -10vh) scale(1.2) rotate(8deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cosmic-smoke {
+    animation: none;
+  }
+}

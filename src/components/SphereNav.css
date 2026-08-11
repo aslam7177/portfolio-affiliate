@@ -1,0 +1,168 @@
+.sphere-nav {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  pointer-events: none;
+}
+
+.orbit-system {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.orbital-stage {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 820px;
+  height: 620px;
+  transform: translate(-50%, -50%);
+}
+
+.central-monogram {
+  position: absolute;
+  z-index: 3;
+  top: 50%;
+  left: 50%;
+  width: 150px;
+  height: 160px;
+  transform: translate(-50%, -50%);
+  pointer-events: auto;
+  filter: drop-shadow(0 0 9px rgba(56, 189, 248, 0.85)) drop-shadow(0 0 32px rgba(37, 99, 235, 0.52));
+  transition: filter 0.25s ease, transform 0.25s ease;
+}
+
+.central-monogram:hover,
+.central-monogram:focus-visible {
+  filter: drop-shadow(0 0 14px rgba(125, 211, 252, 1)) drop-shadow(0 0 46px rgba(37, 99, 235, 0.72));
+  transform: translate(-50%, -50%) scale(1.05);
+}
+
+.central-monogram svg { width: 100%; height: 100%; overflow: visible; }
+.monogram-ring { fill: none; stroke: rgba(147, 197, 253, 0.9); stroke-width: 5; }
+.monogram-a { fill: none; stroke: url(#monogram-metal); stroke-width: 13; stroke-linecap: round; stroke-linejoin: round; }
+.monogram-energy { fill: none; stroke: #38bdf8; stroke-width: 8; stroke-linecap: round; }
+
+.orbit {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--orbit-width);
+  height: var(--orbit-height);
+  animation: planet-orbit var(--orbit-duration) linear var(--orbit-delay) infinite;
+  will-change: transform;
+}
+
+.orbit:hover,
+.orbit:focus-within { animation-play-state: paused; }
+
+.sphere {
+  position: absolute;
+  top: -24px;
+  left: calc(50% - 24px);
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  pointer-events: auto;
+  animation: counter-orbit var(--orbit-duration) linear var(--orbit-delay) infinite reverse;
+  transition: transform 0.25s ease;
+}
+
+.orbit:hover .sphere,
+.orbit:focus-within .sphere { animation-play-state: paused; transform: scale(1.16); }
+
+.sphere-core {
+  position: relative;
+  z-index: 2;
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: radial-gradient(circle at 32% 28%, rgba(255, 255, 255, 0.45) 0%, var(--sphere-color) 42%, rgba(0, 0, 0, 0.64) 100%);
+  box-shadow: 0 0 14px var(--sphere-glow), inset -8px -10px 14px rgba(0, 0, 0, 0.35);
+  transition: filter 0.25s ease, box-shadow 0.25s ease;
+}
+
+.sphere:hover .sphere-core,
+.sphere:focus-visible .sphere-core,
+.sphere.active .sphere-core {
+  filter: saturate(1.25) brightness(1.18);
+  box-shadow: 0 0 23px var(--sphere-glow), 0 0 48px var(--sphere-glow), inset -8px -10px 14px rgba(0, 0, 0, 0.28);
+}
+
+.sphere-trail {
+  position: absolute;
+  z-index: 1;
+  top: 15px;
+  right: 28px;
+  width: 115px;
+  height: 22px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at right, var(--sphere-glow), transparent 72%);
+  filter: blur(9px);
+  opacity: 0.34;
+  pointer-events: none;
+}
+
+.sphere-label {
+  position: absolute;
+  z-index: 4;
+  top: -32px;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  color: rgba(255, 255, 255, 0.96);
+  font-size: 0.73rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-shadow: 0 0 15px var(--sphere-glow);
+  pointer-events: none;
+}
+
+@keyframes planet-orbit {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+@keyframes counter-orbit {
+  from { rotate: 0deg; }
+  to { rotate: 360deg; }
+}
+
+.sphere-nav-compact { inset: 0 auto auto 0; width: 280px; height: 220px; }
+.sphere-nav-compact .orbit-system { overflow: visible; }
+.sphere-nav-compact .orbital-stage { top: 0; left: 0; transform: translate(-45%, -43%) scale(0.42); transform-origin: center; }
+
+.mobile-nav { display: none; }
+
+@media (max-width: 768px) {
+  .sphere-nav { display: none; }
+  .mobile-nav { display: block; }
+  .mobile-tab-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 200;
+    display: flex;
+    justify-content: space-around;
+    padding: 0.5rem 0.25rem calc(0.5rem + env(safe-area-inset-bottom));
+    background: rgba(5, 5, 10, 0.92);
+    backdrop-filter: blur(12px);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .mobile-tab-bar a { display: flex; flex: 1; min-width: 0; flex-direction: column; align-items: center; gap: 0.2rem; padding: 0.35rem 0.25rem; color: rgba(255, 255, 255, 0.45); font-size: 0.6rem; letter-spacing: 0.04em; text-transform: uppercase; }
+  .mobile-tab-bar a.active { color: var(--accent); }
+  .mobile-tab-dot { width: 8px; height: 8px; border-radius: 50%; background: currentColor; opacity: 0.5; }
+  .mobile-tab-bar a.active .mobile-tab-dot { opacity: 1; box-shadow: 0 0 10px var(--accent); }
+  .mobile-tab-label { overflow: hidden; max-width: 100%; text-overflow: ellipsis; white-space: nowrap; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .orbit, .sphere { animation: none; }
+}

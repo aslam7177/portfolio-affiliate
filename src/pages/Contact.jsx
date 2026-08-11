@@ -1,158 +1,73 @@
 import { useState } from 'react';
+import PageLayout from '../components/PageLayout';
+import { site } from '../data/site';
 import './Contact.css';
 
 const Contact = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    subject: '',
-    message: '',
-  });
+  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+  const [status, setStatus] = useState({ type: '', message: '' });
 
-  const [status, setStatus] = useState('');
-
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+  const handleChange = (event) => {
+    setFormData({ ...formData, [event.target.name]: event.target.value });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Here you would typically send the form data to a backend
-    console.log('Form submitted:', formData);
-    setStatus('success');
-    setFormData({ name: '', email: '', subject: '', message: '' });
-    
-    setTimeout(() => {
-      setStatus('');
-    }, 3000);
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setStatus({ type: 'loading', message: 'Sending your message…' });
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+      const result = await response.json();
+      if (!response.ok) throw new Error(result.error || 'Unable to send your message.');
+
+      setStatus({ type: 'success', message: 'Thanks — your message has been sent.' });
+      setFormData({ name: '', email: '', message: '' });
+    } catch (error) {
+      setStatus({ type: 'error', message: error.message || 'Something went wrong. Please email me directly.' });
+    }
   };
 
   return (
-    <div className="contact">
-      <section className="contact-hero">
-        <div className="container">
-          <h1>Get In Touch</h1>
-          <p className="subtitle">I'd love to hear from you</p>
-        </div>
-      </section>
+    <PageLayout>
+      <div className="page-content contact-page">
+        <header className="page-header">
+          <p className="eyebrow">Let&apos;s connect</p>
+          <h1>Build something meaningful.</h1>
+          <p className="page-subtitle">I&apos;m open to thoughtful collaborations, ambitious products, and opportunities to learn.</p>
+        </header>
 
-      <section className="contact-content">
-        <div className="container">
-          <div className="contact-grid">
-            <div className="contact-info">
-              <h2>Let's Connect</h2>
-              <p>
-                Whether you have a project in mind, want to collaborate, or just 
-                want to say hello, feel free to reach out. I'm always open to 
-                discussing new opportunities and ideas.
-              </p>
-              
-              <div className="contact-details">
-                <div className="contact-item">
-                  <span className="contact-icon">📧</span>
-                  <div>
-                    <h4>Email</h4>
-                    <p>your.email@example.com</p>
-                  </div>
-                </div>
-                
-                <div className="contact-item">
-                  <span className="contact-icon">💼</span>
-                  <div>
-                    <h4>LinkedIn</h4>
-                    <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
-                      linkedin.com/in/yourprofile
-                    </a>
-                  </div>
-                </div>
-                
-                <div className="contact-item">
-                  <span className="contact-icon">🐙</span>
-                  <div>
-                    <h4>GitHub</h4>
-                    <a href="https://github.com" target="_blank" rel="noopener noreferrer">
-                      github.com/yourusername
-                    </a>
-                  </div>
-                </div>
-              </div>
+        <div className="contact-grid">
+          <div className="contact-info">
+            <div className="contact-links">
+              <a href={`mailto:${site.email}`} className="contact-link-item"><span className="contact-icon">@</span><div><strong>Email</strong><span>{site.email}</span></div></a>
+              <a href={site.github} target="_blank" rel="noopener noreferrer" className="contact-link-item"><span className="contact-icon">GH</span><div><strong>GitHub</strong><span>github.com/aslam7177</span></div></a>
+              <a href={site.linkedin} target="_blank" rel="noopener noreferrer" className="contact-link-item"><span className="contact-icon">in</span><div><strong>LinkedIn</strong><span>linkedin.com/in/mullaaslam</span></div></a>
+              <div className="contact-link-item"><span className="contact-icon">IN</span><div><strong>Location</strong><span>{site.location}</span></div></div>
             </div>
 
-            <div className="contact-form-container">
-              <form className="contact-form" onSubmit={handleSubmit}>
-                <div className="form-group">
-                  <label htmlFor="name">Name</label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    required
-                    placeholder="Your name"
-                  />
-                </div>
-
-                <div className="form-group">
-                  <label htmlFor="email">Email</label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    required
-                    placeholder="your.email@example.com"
-                  />
-                </div>
-
-                <div className="form-group">
-                  <label htmlFor="subject">Subject</label>
-                  <input
-                    type="text"
-                    id="subject"
-                    name="subject"
-                    value={formData.subject}
-                    onChange={handleChange}
-                    required
-                    placeholder="What's this about?"
-                  />
-                </div>
-
-                <div className="form-group">
-                  <label htmlFor="message">Message</label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    value={formData.message}
-                    onChange={handleChange}
-                    required
-                    rows="6"
-                    placeholder="Your message here..."
-                  ></textarea>
-                </div>
-
-                {status === 'success' && (
-                  <div className="form-success">
-                    ✓ Message sent successfully! I'll get back to you soon.
-                  </div>
-                )}
-
-                <button type="submit" className="btn-submit">
-                  Send Message
-                </button>
-              </form>
-            </div>
+            <a href={site.resumeUrl} className="resume-btn" download onClick={(event) => {
+              if (site.resumeUrl === '#') {
+                event.preventDefault();
+                alert('Add your resume PDF link in src/data/site.js');
+              }
+            }}>Download Resume</a>
           </div>
+
+          <form className="contact-form" onSubmit={handleSubmit}>
+            <div className="form-group"><label htmlFor="name">Name</label><input type="text" id="name" name="name" value={formData.name} onChange={handleChange} required maxLength="100" placeholder="Your name" /></div>
+            <div className="form-group"><label htmlFor="email">Email</label><input type="email" id="email" name="email" value={formData.email} onChange={handleChange} required maxLength="254" placeholder="your.email@example.com" /></div>
+            <div className="form-group"><label htmlFor="message">Message</label><textarea id="message" name="message" value={formData.message} onChange={handleChange} required maxLength="5000" rows="5" placeholder="Tell me a little about your project…" /></div>
+            {status.message && <p className={`form-status form-status-${status.type}`} role="status">{status.message}</p>}
+            <button type="submit" className="btn-submit" disabled={status.type === 'loading'}>{status.type === 'loading' ? 'Sending…' : 'Send Message'}</button>
+          </form>
         </div>
-      </section>
-    </div>
+      </div>
+    </PageLayout>
   );
 };
 
 export default Contact;
-
-

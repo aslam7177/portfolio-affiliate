@@ -1,38 +1,36 @@
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
-import Header from './components/Header';
-import Footer from './components/Footer';
+import { AnimatePresence } from 'framer-motion';
 import Home from './pages/Home';
 import About from './pages/About';
 import Portfolio from './pages/Portfolio';
-import Affiliate from './pages/Affiliate';
+import Certifications from './pages/Certifications';
+import Blog from './pages/Blog';
 import Contact from './pages/Contact';
 import './App.css';
 
-function AppContent() {
+const AnimatedRoutes = () => {
   const location = useLocation();
-  const isHomePage = location.pathname === '/';
 
   return (
-    <div className={`App ${isHomePage ? 'home-page' : ''}`}>
-      {!isHomePage && <Header />}
-      <main className={`main-content ${isHomePage ? 'home-main' : ''}`}>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/portfolio" element={<Portfolio />} />
-          <Route path="/affiliate" element={<Affiliate />} />
-          <Route path="/contact" element={<Contact />} />
-        </Routes>
-      </main>
-      {!isHomePage && <Footer />}
-    </div>
+    <AnimatePresence mode="wait">
+      <Routes location={location} key={location.pathname}>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/portfolio" element={<Portfolio />} />
+        <Route path="/certifications" element={<Certifications />} />
+        <Route path="/blog" element={<Blog />} />
+        <Route path="/contact" element={<Contact />} />
+      </Routes>
+    </AnimatePresence>
   );
-}
+};
 
 function App() {
   return (
     <Router>
-      <AppContent />
+      <div className="App">
+        <AnimatedRoutes />
+      </div>
     </Router>
   );
 }

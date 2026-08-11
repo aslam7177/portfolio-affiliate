@@ -1,85 +1,107 @@
+import { useState } from 'react';
+import PageLayout from '../components/PageLayout';
 import './About.css';
 
+const skills = [
+  {
+    category: 'Languages',
+    items: ['Python'],
+  },
+  {
+    category: 'Core CS',
+    items: ['Data Structures & Algorithms', 'OOP', 'Computer Networking'],
+  },
+  {
+    category: 'Databases',
+    items: ['MySQL', 'SQLite', 'SQL (Joins, CTEs, Window Functions)'],
+  },
+  {
+    category: 'Backend/APIs',
+    items: ['Flask', 'REST APIs', 'MVC Architecture', 'Postman'],
+  },
+  {
+    category: 'Tools',
+    items: ['Git', 'GitHub', 'Docker', 'VS Code', 'Selenium WebDriver'],
+  },
+  {
+    category: 'Data/ML',
+    items: ['NLP', 'Scikit-learn', 'Pandas', 'NumPy'],
+  },
+];
+
 const About = () => {
+  const [photoError, setPhotoError] = useState(false);
+
   return (
-    <div className="about-knowledge-panel">
-      <div className="knowledge-container">
-        <div className="knowledge-layout">
-          {/* Left Column - Image Gallery */}
-          <div className="knowledge-left">
-            <div className="image-gallery">
-              <div className="gallery-image">
-                <span>Profile Photo</span>
+    <PageLayout>
+      <div className="page-content about-page">
+        <header className="page-header">
+          <h1>About</h1>
+          <p className="page-subtitle">Who I am & what I build</p>
+        </header>
+
+        <div className="about-grid">
+          <div className="about-photo-wrap">
+            {!photoError ? (
+              <img
+                src="/profile.jpg"
+                alt="Mulla Aslam"
+                className="about-photo"
+                onError={() => setPhotoError(true)}
+              />
+            ) : (
+              <div className="about-photo-placeholder" aria-label="Profile photo placeholder">
+                <span>MA</span>
+                <p>Add profile.jpg to public/</p>
               </div>
-              <div className="gallery-image">
-                <span>Photo 2</span>
-              </div>
-              <div className="gallery-image">
-                <span>Photo 3</span>
-              </div>
-            </div>
+            )}
           </div>
 
-          {/* Center Column - Main Content */}
-          <div className="knowledge-center">
-            <h1 className="knowledge-name">Mohammad Aslam</h1>
-            <p className="knowledge-subtitle">
-              Computer Science Engineering Undergraduate · Co-Founder of Botter
+          <div className="about-bio">
+            <p className="about-intro">
+              I&apos;m Mulla Aslam, a Computer Science Engineering graduate (B.Tech, 2022–2026)
+              from GITAM Deemed to be University, Bengaluru. I build backend systems, AI-powered
+              tools, and data-driven applications — with hands-on experience across Python, Flask,
+              SQL, and Docker. I enjoy turning messy real-world data into working, deployable
+              products, from air quality intelligence platforms to trading bots.
             </p>
-            
-            <div className="knowledge-tabs">
-              <button className="tab-pill active">Overview</button>
-              <button className="tab-pill">Projects</button>
-              <button className="tab-pill">Posts</button>
-            </div>
-
-            <div className="knowledge-about">
-              <p>
-                I am Aslam, a Computer Science Engineering undergraduate. I love artificial intelligence, computer networks, and computers in general. I enjoy thinking deeply, innovating, and exploring ideas while trying to understand the purpose of life and work. Almost everything in technology feels interesting to me.
-              </p>
-              <p>
-                It's not about the money.
-              </p>
-              <p>
-                i sell soap and others thing take a look if you care
-              </p>
-            </div>
-          </div>
-
-          {/* Right Column - Info Cards */}
-          <div className="knowledge-right">
-            <div className="info-card">
-              <div className="info-label">Born</div>
-              <div className="info-value">23 October 2004</div>
-              <div className="info-detail">Born at home</div>
-            </div>
-
-            <div className="info-card">
-              <div className="info-label">Location</div>
-              <div className="info-value">Pulivendula, Andhra Pradesh, India</div>
-            </div>
-
-            <div className="info-card">
-              <div className="info-label">Education</div>
-              <div className="info-value">GITAM University</div>
-            </div>
-
-            <div className="info-card club-card">
-              <div className="info-label">Club</div>
-              <div className="info-value">Botter</div>
-            </div>
-
-            <div className="info-card">
-              <div className="info-label">Net Worth</div>
-              <div className="info-value">Future goal — Multi-billionaire</div>
-            </div>
           </div>
         </div>
+
+        <section className="about-section">
+          <h2>Education</h2>
+          <ul className="timeline">
+            <li>
+              <strong>B.Tech – Computer Science Engineering</strong>
+              <span>GITAM Deemed to be University, Bengaluru</span>
+              <span className="timeline-date">June 2022 – May 2026</span>
+            </li>
+            <li>
+              <strong>Intermediate – MPC (Mathematics, Physics, Chemistry)</strong>
+              <span>Sri Chaitanya Junior College, Tirupati</span>
+              <span className="timeline-date">June 2020 – May 2022</span>
+            </li>
+          </ul>
+        </section>
+
+        <section className="about-section">
+          <h2>Skills</h2>
+          <div className="skills-grid">
+            {skills.map((group) => (
+              <div key={group.category} className="skill-group">
+                <h3>{group.category}</h3>
+                <ul>
+                  {group.items.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </section>
       </div>
-    </div>
+    </PageLayout>
   );
 };
 
 export default About;
-
-
